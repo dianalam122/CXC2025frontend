@@ -1,12 +1,17 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Progress } from "@/components/ui/progress"
 
-// dummy data placeholder
-const SAMPLE_PREDICTIONS = [
-  { event: "some event", probability: 10 },
-  { event: "some event", probability: 20 },
-  { event: "some event", probability: 30 },
+// Dummy data placeholder
+const PREDICTIONS = [
+  { event: "some event1", probability: 10 },
+  { event: "some event2", probability: 20 },
+  { event: "some event3", probability: 30 },
 ]
+
+const CHURN_THRESHOLD = 10
+
+// Check if any event has a probability ≤ 10 (churn risk)
+const isChurnRisk = PREDICTIONS.some(({ probability }) => probability <= CHURN_THRESHOLD);
 
 export default function PredictionResults() {
   return (
@@ -16,7 +21,7 @@ export default function PredictionResults() {
       </CardHeader>
       <CardContent>
         <div className="space-y-4">
-          {SAMPLE_PREDICTIONS.map(({ event, probability }) => (
+          {PREDICTIONS.map(({ event, probability }) => (
             <div key={event} className="space-y-2">
               <div className="flex justify-between text-sm">
                 <span>{event}</span>
@@ -25,9 +30,14 @@ export default function PredictionResults() {
               <Progress value={probability} />
             </div>
           ))}
+
+          {isChurnRisk && (
+            <div className="mt-4 p-2 text-sm text-white text-center rounded-lg bg-red-600">
+              Warning: Churn dectected
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
   )
 }
-
