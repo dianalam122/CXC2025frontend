@@ -9,24 +9,14 @@ import { ScrollArea } from "@/components/ui/scroll-area"
 import EventHistory from "../../event-history"
 import PredictionResults from "../../prediction-results"
 import AnalyticsSection from "../../analytics-section"
-import Link from 'next/link'
-
-const SAMPLE_EVENTS = [
-  "unified-dashboard-page-view",
-  "loss-analysis-accordion-selected",
-  "account-property-rating:perils:perils-table:edit-click",
-  "account::more-actions:take-action-click",
-  "account-lines::duplicate-policy-modal:duplicate-rating",
-  "::nav-header:action-center-click",
-  "dashboard:my-book:upcoming-accounts:account-click Update",
-  "account-lines:::view",
-]
+import { EVENT_TYPES } from "@/lib/eventTypes"
+// import { SAMPLE_EVENT_TYPES } from "@/lib/eventTypes"
 
 export default function Dashboard() {
   const [searchTerm, setSearchTerm] = useState("")
   const [selectedEvents, setSelectedEvents] = useState<string[]>([])
 
-  const filteredEvents = SAMPLE_EVENTS.filter((event) => event.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredEvents = EVENT_TYPES.filter((event) => event.toLowerCase().includes(searchTerm.toLowerCase()))
 
   const handleEventSelect = (event: string) => {
     setSelectedEvents((prev) => [...prev, event])
