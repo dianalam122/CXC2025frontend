@@ -6,9 +6,10 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import EventHistory from "./event-history"
-import PredictionResults from "./prediction-results"
-import AnalyticsSection from "./analytics-section"
+import EventHistory from "../../event-history"
+import PredictionResults from "../../prediction-results"
+import AnalyticsSection from "../../analytics-section"
+import Link from 'next/link'
 
 const SAMPLE_EVENTS = [
   "unified-dashboard-page-view",
@@ -111,4 +112,3 @@ export default function Dashboard() {
     </div>
   )
 }
-
