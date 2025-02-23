@@ -33,7 +33,7 @@ export default function PredictionResults() {
 
           {isChurnRisk && (
             <div className="mt-4 p-2 text-sm text-white text-center rounded-lg bg-red-600">
-              Warning: Churn dectected
+              Warning: Churn detected...
             </div>
           )}
         </div>
