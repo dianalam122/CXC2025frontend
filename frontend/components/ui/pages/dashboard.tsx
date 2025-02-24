@@ -174,30 +174,15 @@ export default function Dashboard() {
 					{/* Main Content */}
 					<div className="col-span-9 space-y-6">
 						<div className="grid grid-cols-12 gap-6">
-							<div className="col-span-5">
+							<div className="col-span-6">
 								<EventHistory
 									events={selectedEvents}
 									onClear={handleClearEvents}
 									userId={userId}
 								/>
 							</div>
-							<div className="col-span-4">
-								<PredictionResults
-								// topEvents={userData?.top_events}
-								// topChurnEvents={userData?.top_churn_events}
-								/>
-							</div>
-							<div className="col-span-3">
-								<Card>
-									<CardHeader>
-										<CardTitle>LLM Suggestions</CardTitle>
-									</CardHeader>
-									<CardContent>
-										<p className="text-sm text-muted-foreground">
-											"suggestions should appear here"
-										</p>
-									</CardContent>
-								</Card>
+							<div className="col-span-6">
+								<PredictionResults />
 							</div>
 						</div>
 
