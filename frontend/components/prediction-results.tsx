@@ -1,11 +1,12 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 
-// Dummy data placeholder
+// Default predictions using real events
 const PREDICTIONS = [
-	{ event: "some event1", probability: 10 },
-	{ event: "some event2", probability: 20 },
-	{ event: "some event3", probability: 30 },
+	{ event: "application-window-opened", probability: 73 },
+	{ event: "account-lines:::view", probability: 42 },
+	{ event: "account:::view", probability: 38 },
+	{ event: "dashboard:my-book::view", probability: 31 },
 ];
 
 const CHURN_THRESHOLD = 10;
@@ -22,7 +23,7 @@ export default function PredictionResults() {
 				<CardTitle>Most Likely Events</CardTitle>
 			</CardHeader>
 			<CardContent>
-				<div className="space-y-4 mb-9 pb-4">
+				<div className="space-y-4 mb-4 pb-4">
 					{PREDICTIONS.map(({ event, probability }) => (
 						<div key={event} className="space-y-2">
 							<div className="flex justify-between text-sm">
