@@ -16,6 +16,7 @@ import { EVENT_TYPES } from "@/lib/eventTypes";
 export default function Dashboard() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
+	const [userId, setUserId] = useState("");
 
 	const filteredEvents = EVENT_TYPES.filter((event) =>
 		event.toLowerCase().includes(searchTerm.toLowerCase())
@@ -23,6 +24,10 @@ export default function Dashboard() {
 
 	const handleEventSelect = (event: string) => {
 		setSelectedEvents((prev) => [...prev, event]);
+	};
+
+	const handleClearEvents = () => {
+		setSelectedEvents([]);
 	};
 
 	return (
@@ -36,6 +41,31 @@ export default function Dashboard() {
 			</header>
 
 			<main className="container mx-auto px-4 py-6">
+				<div className="mb-6">
+					<Card>
+						<CardContent className="py-4">
+							<div className="flex gap-4 items-center">
+								<div className="flex-1">
+									<Input
+										placeholder="Enter User ID"
+										value={userId}
+										onChange={(e) =>
+											setUserId(e.target.value)
+										}
+										className="max-w-xs"
+									/>
+								</div>
+								<Button
+									variant="secondary"
+									className="hover:bg-blue-600 hover:text-white transition-colors"
+								>
+									Load User Data
+								</Button>
+							</div>
+						</CardContent>
+					</Card>
+				</div>
+
 				<div className="grid grid-cols-12 gap-6">
 					{/* Left Sidebar */}
 					<div className="col-span-3 space-y-2">
@@ -105,7 +135,11 @@ export default function Dashboard() {
 					<div className="col-span-9 space-y-6">
 						<div className="grid grid-cols-12 gap-6">
 							<div className="col-span-5">
-								<EventHistory events={selectedEvents} />
+								<EventHistory
+									events={selectedEvents}
+									onClear={handleClearEvents}
+									userId={userId}
+								/>
 							</div>
 							<div className="col-span-4">
 								<PredictionResults />
