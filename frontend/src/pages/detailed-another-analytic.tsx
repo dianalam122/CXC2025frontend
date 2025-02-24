@@ -15,7 +15,6 @@ interface DetailedAnotherAnalyticProps {
 
 export default function DetailedAnotherAnalytic({ title, parentSection }: DetailedAnotherAnalyticProps) {
   const [filters, setFilters] = useState({
-    userId: "",
     Date: "",
     startDate: "",
     endDate: "",
@@ -46,12 +45,7 @@ export default function DetailedAnotherAnalytic({ title, parentSection }: Detail
                 <h2 className="text-lg font-semibold mb-4">Filters</h2>
                 <div className="space-y-4">
                   <div className="space-y-2">
-                    <Input
-                      id="userId"
-                      placeholder="Enter user ID"
-                      value={filters.userId}
-                      onChange={(e) => setFilters({ ...filters, userId: e.target.value })}
-                    />
+
                   </div>
                   <div className="space-y-2">
                     <Input
