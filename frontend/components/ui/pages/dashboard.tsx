@@ -46,13 +46,14 @@ export default function Dashboard() {
 
 	const handleLoadUserData = async () => {
 		try {
-			const response = await fetch("http://localhost:5000/user-data", {
+			const response = await fetch("http://127.0.0.1:5000/user-data", {
 				method: "POST",
 				headers: {
 					"Content-Type": "application/json",
 				},
 				body: JSON.stringify({ userId }),
 			});
+			console.log(response);
 
 			if (!response.ok) {
 				throw new Error("Failed to load user data");
