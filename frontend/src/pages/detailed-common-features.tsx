@@ -13,6 +13,46 @@ interface DetailedCommonFeaturesProps {
   parentSection: string
 }
 
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+
+const data = [
+    { event_type: "dashboard:my-book::view", return_rate: 2 },
+    { event_type: "application-window-opened", return_rate: 1 },
+    { event_type: "all-accounts:::view", return_rate: 1 },
+	{ event_type: "all-accounts::accounts-table:account-click", return_rate: 1 },
+	{ event_type: "account:::view", return_rate: 1 },
+
+];
+
+const plotData = [{
+    x: data.map(item => item.event_type),
+    y: data.map(item => item.return_rate),
+    type: 'bar',
+    marker: {
+      color: '#3b82f6'
+    }
+}];
+
+const layout = {
+    title: 'Common Event Types',
+    xaxis: {
+      tickangle: -45,
+      automargin: true
+    },
+    yaxis: {
+      title: 'Count'
+    },
+    margin: {
+      b: 100
+    },
+    autosize: true
+};
+
+const config = {
+    responsive: true,
+    displayModeBar: false
+};
+
 export default function DetailedCommonFeatures({ title, parentSection }: DetailedCommonFeaturesProps) {
   const [filters, setFilters] = useState({
     userId: "",
@@ -65,10 +105,16 @@ export default function DetailedCommonFeatures({ title, parentSection }: Detaile
 
           {/* Main Content */}
           <div className="col-span-9 space-y-6">
-            <Card>
+          <Card>
               <CardContent className="p-6">
-                {/* Placeholder for the graph */}
-               
+                <div className="w-full h-64">
+                  <Plot
+                    data={plotData}
+                    layout={layout}
+                    config={config}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
               </CardContent>
             </Card>
 

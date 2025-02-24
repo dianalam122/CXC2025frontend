@@ -13,6 +13,45 @@ interface DetailedChurnEventsProps {
   parentSection: string
 }
 
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+
+const data = [
+  { event_type: "account-lines:::view", terminal_rate: 0.6363636363636364 },
+  { event_type: "dashboard:my-book::view", terminal_rate: 0.18181818181818182 },
+  { event_type: "all-accounts:::view", terminal_rate: 0.13636363636363635 },
+
+];
+
+const plotData = [{
+    x: data.map(item => item.event_type),
+    y: data.map(item => item.terminal_rate),
+    type: 'bar',
+    marker: {
+      color: '#3b82f6'
+    }
+}];
+
+const layout = {
+    title: 'Churn Events',
+    xaxis: {
+      tickangle: -45,
+      automargin: true
+    },
+    yaxis: {
+      title: 'Count'
+    },
+    margin: {
+      b: 100
+    },
+    autosize: true
+};
+
+const config = {
+    responsive: true,
+    displayModeBar: false
+};
+
+
 export default function DetailedChurnEvents({ title, parentSection }: DetailedChurnEventsProps) {
   const [filters, setFilters] = useState({
     userId: "",
@@ -65,10 +104,16 @@ export default function DetailedChurnEvents({ title, parentSection }: DetailedCh
 
           {/* Main Content */}
           <div className="col-span-9 space-y-6">
-            <Card>
+          <Card>
               <CardContent className="p-6">
-                {/* Placeholder for the graph */}
-               
+                <div className="w-full h-64">
+                  <Plot
+                    data={plotData}
+                    layout={layout}
+                    config={config}
+                    style={{ width: '100%', height: '100%' }}
+                  />
+                </div>
               </CardContent>
             </Card>
 

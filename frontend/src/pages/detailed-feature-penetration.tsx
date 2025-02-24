@@ -13,6 +13,46 @@ interface DetailedFeaturePenetrationProps {
   parentSection: string
 }
 
+const Plot = dynamic(() => import("react-plotly.js"), { ssr: false });
+
+const data = [
+    { event_type: "dashboard:my-book::view", return_rate: 2 },
+    { event_type: "application-window-opened", return_rate: 1 },
+    { event_type: "all-accounts:::view", return_rate: 1 },
+	{ event_type: "all-accounts::accounts-table:account-click", return_rate: 1 },
+	{ event_type: "account:::view", return_rate: 1 },
+
+];
+
+const plotData = [{
+    x: data.map(item => item.event_type),
+    y: data.map(item => item.return_rate),
+    type: 'bar',
+    marker: {
+      color: '#3b82f6'
+    }
+}];
+
+const layout = {
+    title: 'Feature Penetration',
+    xaxis: {
+      tickangle: -45,
+      automargin: true
+    },
+    yaxis: {
+      title: 'Count'
+    },
+    margin: {
+      b: 100
+    },
+    autosize: true
+};
+
+const config = {
+    responsive: true,
+    displayModeBar: false
+};
+
 export default function DetailedFeaturePenetration({ title, parentSection }: DetailedFeaturePenetrationProps) {
   const [filters, setFilters] = useState({
     userId: "",
