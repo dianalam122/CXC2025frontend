@@ -18,7 +18,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={inter.className}>
         <header className="bg-primary text-primary-foreground p-4">
-          <h1 className="text-2xl font-bold">Dashboard</h1>
+          <h1 className="text-2xl font-bold text-center">Federato User Analytics Dashboard</h1>
         </header>
         {children}
       </body>

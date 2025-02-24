@@ -289,7 +289,7 @@ export default function DetailedDataSummary() {
 												{event.totalOccurrences.toLocaleString()}
 											</div>
 											<div>
-												Terminal Rate:{" "}
+												Churn Rate:{" "}
 												{event.averageTerminalRate}%
 											</div>
 										</div>
@@ -351,7 +351,7 @@ export default function DetailedDataSummary() {
 												{event.numberOfUsers.toLocaleString()}
 											</div>
 											<div>
-												Retention:{" "}
+												Retention Rate:{" "}
 												{event.percentageOfUsers}%
 											</div>
 										</div>
