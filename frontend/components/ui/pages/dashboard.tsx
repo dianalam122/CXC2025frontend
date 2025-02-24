@@ -13,10 +13,24 @@ import AnalyticsSection from "../../analytics-section";
 import { EVENT_TYPES } from "@/lib/eventTypes";
 // import { SAMPLE_EVENT_TYPES } from "@/lib/eventTypes"
 
+interface UserData {
+	user_id: number;
+	amplitude_id: number;
+	top_events: any;
+	top_churn_events: any;
+	top_retention_events: any;
+	average_session_time: number;
+	total_session_time: number;
+	frequency_of_sessions: number;
+	user_retention_30: number;
+	daily_active_periods: any;
+}
+
 export default function Dashboard() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
 	const [userId, setUserId] = useState("");
+	const [userData, setUserData] = useState<UserData | null>(null);
 
 	const filteredEvents = EVENT_TYPES.filter((event) =>
 		event.toLowerCase().includes(searchTerm.toLowerCase())
@@ -28,6 +42,29 @@ export default function Dashboard() {
 
 	const handleClearEvents = () => {
 		setSelectedEvents([]);
+	};
+
+	const handleLoadUserData = async () => {
+		try {
+			const response = await fetch("http://localhost:5000/user-data", {
+				method: "POST",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({ userId }),
+			});
+
+			if (!response.ok) {
+				throw new Error("Failed to load user data");
+			}
+
+			const data = await response.json();
+			setUserData(data);
+
+			console.log("User data loaded:", data);
+		} catch (error) {
+			console.error("Error loading user data:", error);
+		}
 	};
 
 	return (
@@ -58,6 +95,7 @@ export default function Dashboard() {
 								<Button
 									variant="secondary"
 									className="hover:bg-blue-600 hover:text-white transition-colors"
+									onClick={handleLoadUserData}
 								>
 									Load User Data
 								</Button>
@@ -142,7 +180,10 @@ export default function Dashboard() {
 								/>
 							</div>
 							<div className="col-span-4">
-								<PredictionResults />
+								<PredictionResults
+								// topEvents={userData?.top_events}
+								// topChurnEvents={userData?.top_churn_events}
+								/>
 							</div>
 							<div className="col-span-3">
 								<Card>
@@ -158,7 +199,15 @@ export default function Dashboard() {
 							</div>
 						</div>
 
-						<AnalyticsSection />
+						<AnalyticsSection
+						// averageSessionTime={userData?.average_session_time}
+						// totalSessionTime={userData?.total_session_time}
+						// frequencyOfSessions={
+						// 	userData?.frequency_of_sessions
+						// }
+						// userRetention={userData?.user_retention_30}
+						// dailyActivePeriods={userData?.daily_active_periods}
+						/>
 					</div>
 				</div>
 			</main>
