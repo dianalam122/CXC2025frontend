@@ -12,7 +12,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Event Frequency</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="frontend/components/ui/pages/detailed-event-frequency.tsx">
+					<Link href="/detailed-event-frequency">
 						<Button
 							variant="outline"
 							size="sm"
@@ -29,7 +29,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Retention Rate</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="frontend/components/ui/pages/detailed-retention-rate.tsx">
+					<Link href="/detailed-retention-rate">
 						<Button
 							variant="outline"
 							size="sm"
@@ -46,7 +46,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Common Features</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="frontend/components/ui/pages/detailed-common-features.tsx">
+					<Link href="/detailed-common-features">
 						<Button
 							variant="outline"
 							size="sm"
@@ -63,7 +63,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Feature Penetration</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="frontend/components/ui/pages/detailed-feature-penetration.tsx">
+					<Link href="/detailed-feature-penetration">
 						<Button
 							variant="outline"
 							size="sm"
@@ -80,7 +80,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Churn Events</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="frontend/src/pages/detailed-churn-events">
+					<Link href="/detailed-churn-events">
 						<Button
 							variant="outline"
 							size="sm"
@@ -97,7 +97,7 @@ export default function AnalyticsSection() {
 					<CardTitle>Another Analytic...</CardTitle>
 				</CardHeader>
 				<CardContent>
-					<Link href="/detailed-another-analytics.tsx">
+					<Link href="/detailed-another-analytics">
 						<Button
 							variant="outline"
 							size="sm"
