@@ -54,6 +54,7 @@ export default function Dashboard() {
 				},
 				body: JSON.stringify({ userId }),
 			});
+			console.log(response);
 
 			if (!response.ok) {
 				throw new Error("Failed to load user data");
