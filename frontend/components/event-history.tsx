@@ -26,6 +26,7 @@ export default function EventHistory({
 				"http://localhost:5000/create-session",
 				{
 					method: "POST",
+					credentials: "include",
 					headers: {
 						"Content-Type": "application/json",
 					},
