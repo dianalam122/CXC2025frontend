@@ -3,6 +3,9 @@
 import "@/app/globals.css";
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { ChevronLeft } from "lucide-react";
+import Link from "next/link";
 
 interface ChurnEvent {
 	event: string;
@@ -246,10 +249,17 @@ export default function DetailedDataSummary() {
 	return (
 		<div className="min-h-screen bg-gray-50">
 			<header className="bg-white border-b">
-				<div className="container mx-auto px-4 py-4">
-					<h1 className="text-2xl font-bold text-gray-900">
+				<div className="container mx-auto px-4 py-4 flex items-center">
+					<Link href="/">
+						<Button variant="ghost" size="sm" className="gap-2">
+							<ChevronLeft className="h-4 w-4" />
+							Back to Home
+						</Button>
+					</Link>
+					<h1 className="text-2xl font-bold text-gray-900 flex-1 text-center">
 						Data Analytics Summary
 					</h1>
+					<div className="w-[100px]"></div>
 				</div>
 			</header>
 
