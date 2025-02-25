@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Upload, Search } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -11,6 +11,7 @@ import EventHistory from "../../event-history";
 import PredictionResults from "../../prediction-results";
 import AnalyticsSection from "../../analytics-section";
 import { EVENT_TYPES } from "@/lib/eventTypes";
+import ActionableInsights from "../../actionable-insights";
 // import { SAMPLE_EVENT_TYPES } from "@/lib/eventTypes"
 
 interface UserData {
@@ -29,6 +30,7 @@ interface UserData {
 interface PredictionResult {
 	predicted_event_index: string;
 	predicted_time: number;
+	similarEvents: Array<{ event: string; probability: number }>;
 }
 
 export default function Dashboard() {
@@ -37,6 +39,9 @@ export default function Dashboard() {
 	const [userId, setUserId] = useState("1");
 	const [userData, setUserData] = useState<UserData | null>(null);
 	const [prediction, setPrediction] = useState<PredictionResult | null>(null);
+	const [similarEvents, setSimilarEvents] = useState<
+		Array<{ event: string; probability: number }>
+	>([]);
 
 	const filteredEvents = EVENT_TYPES.filter((event) =>
 		event.toLowerCase().includes(searchTerm.toLowerCase())
@@ -79,6 +84,33 @@ export default function Dashboard() {
 			console.error("Error loading user data:", error);
 		}
 	};
+
+	useEffect(() => {
+		if (prediction?.predicted_event_index) {
+			fetch("http://127.0.0.1:5000/similar-events", {
+				method: "POST",
+				credentials: "include",
+				headers: {
+					"Content-Type": "application/json",
+				},
+				body: JSON.stringify({
+					event_type: prediction.predicted_event_index,
+				}),
+			})
+				.then((response) => {
+					if (!response.ok)
+						throw new Error("Failed to fetch similar events");
+					return response.json();
+				})
+				.then((data) => {
+					const events = Array.isArray(data) ? data : [];
+					setSimilarEvents(events);
+				})
+				.catch((error) =>
+					console.error("Error fetching similar events:", error)
+				);
+		}
+	}, [prediction]);
 
 	return (
 		<div className="min-h-screen bg-gray-50">
@@ -194,19 +226,24 @@ export default function Dashboard() {
 								/>
 							</div>
 							<div className="col-span-6">
-								<PredictionResults prediction={prediction} />
+								<PredictionResults
+									prediction={prediction}
+									similarEvents={similarEvents}
+								/>
+							</div>
+							<div className="col-span-12">
+								<ActionableInsights
+									prediction={prediction}
+									similarEvents={similarEvents}
+									features={userData?.top_events || []}
+									churnEvents={
+										userData?.top_churn_events || []
+									}
+								/>
 							</div>
 						</div>
 
-						<AnalyticsSection
-						// averageSessionTime={userData?.average_session_time}
-						// totalSessionTime={userData?.total_session_time}
-						// frequencyOfSessions={
-						// 	userData?.frequency_of_sessions
-						// }
-						// userRetention={userData?.user_retention_30}
-						// dailyActivePeriods={userData?.daily_active_periods}
-						/>
+						<AnalyticsSection />
 					</div>
 				</div>
 			</main>

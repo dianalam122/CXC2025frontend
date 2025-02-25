@@ -14,6 +14,7 @@ interface EventHistoryProps {
 interface PredictionResult {
 	predicted_event_index: string;
 	predicted_time: number;
+	similarEvents: Array<{ event: string; probability: number }>;
 }
 
 // const defaultPrediction = {
@@ -40,7 +41,6 @@ export default function EventHistory({
 		setIsLoading(true);
 		setError(null);
 		setPrediction(null);
-		console.log("Sending request to /create-session:", requestData);
 
 		try {
 			const sessionResponse = await fetch(
@@ -56,13 +56,10 @@ export default function EventHistory({
 			);
 
 			if (!sessionResponse.ok) {
-				const errorText = await sessionResponse.text();
-				throw new Error(`Failed to create session: ${errorText}`);
+				throw new Error("Failed to create session");
 			}
 
 			const sessionData = await sessionResponse.json();
-			console.log("Session created:", sessionData);
-
 			const predictionResponse = await fetch(
 				"http://127.0.0.1:5000/predict/single",
 				{
@@ -76,16 +73,39 @@ export default function EventHistory({
 			);
 
 			if (!predictionResponse.ok) {
-				const errorText = await predictionResponse.text();
-				throw new Error(`Failed to get prediction: ${errorText}`);
+				throw new Error("Failed to get prediction");
 			}
 
 			const predictionData = await predictionResponse.json();
-			console.log("Prediction received:", predictionData);
-			setPrediction(predictionData);
-			onPrediction(predictionData);
+
+			// Fetch similar events before setting prediction
+			const similarEventsResponse = await fetch(
+				"http://127.0.0.1:5000/similar-events",
+				{
+					method: "POST",
+					credentials: "include",
+					headers: {
+						"Content-Type": "application/json",
+					},
+					body: JSON.stringify({
+						event_type: predictionData.predicted_event_index,
+					}),
+				}
+			);
+
+			if (!similarEventsResponse.ok) {
+				throw new Error("Failed to fetch similar events");
+			}
+
+			const similarEvents = await similarEventsResponse.json();
+			const fullPrediction = {
+				...predictionData,
+				similarEvents: similarEvents,
+			};
+
+			setPrediction(fullPrediction);
+			onPrediction(fullPrediction);
 		} catch (error) {
-			console.error("Error:", error);
 			setError(
 				error instanceof Error
 					? error.message
