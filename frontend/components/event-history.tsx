@@ -8,6 +8,7 @@ interface EventHistoryProps {
 	events: string[];
 	onClear?: () => void;
 	userId: string;
+	onPrediction: (prediction: PredictionResult | null) => void;
 }
 
 interface PredictionResult {
@@ -24,6 +25,7 @@ export default function EventHistory({
 	events,
 	onClear,
 	userId,
+	onPrediction,
 }: EventHistoryProps) {
 	const [prediction, setPrediction] = useState<PredictionResult | null>(null);
 	const [isLoading, setIsLoading] = useState(false);
@@ -81,6 +83,7 @@ export default function EventHistory({
 			const predictionData = await predictionResponse.json();
 			console.log("Prediction received:", predictionData);
 			setPrediction(predictionData);
+			onPrediction(predictionData);
 		} catch (error) {
 			console.error("Error:", error);
 			setError(

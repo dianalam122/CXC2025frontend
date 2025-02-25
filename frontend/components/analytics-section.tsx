@@ -58,56 +58,41 @@ export default function AnalyticsSection() {
 				</CardContent>
 			</Card>
 
-			<Card>
-				<CardHeader>
-					<CardTitle>Feature Penetration</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Link href="/detailed-feature-penetration">
-						<Button
-							variant="outline"
-							size="sm"
-							className="border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
-						>
-							View
-						</Button>
-					</Link>
-				</CardContent>
-			</Card>
+			<div className="col-start-1 col-end-4 grid grid-cols-2 gap-6 w-fit mx-auto">
+				<Card>
+					<CardHeader>
+						<CardTitle>Feature Penetration</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Link href="/detailed-feature-penetration">
+							<Button
+								variant="outline"
+								size="sm"
+								className="border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+							>
+								View
+							</Button>
+						</Link>
+					</CardContent>
+				</Card>
 
-			<Card>
-				<CardHeader>
-					<CardTitle>Churn Events</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Link href="/detailed-churn-events">
-						<Button
-							variant="outline"
-							size="sm"
-							className="border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
-						>
-							View
-						</Button>
-					</Link>
-				</CardContent>
-			</Card>
-
-			<Card>
-				<CardHeader>
-					<CardTitle>Another Analytic...</CardTitle>
-				</CardHeader>
-				<CardContent>
-					<Link href="/detailed-another-analytics">
-						<Button
-							variant="outline"
-							size="sm"
-							className="border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
-						>
-							View
-						</Button>
-					</Link>
-				</CardContent>
-			</Card>
+				<Card>
+					<CardHeader>
+						<CardTitle>Churn Events</CardTitle>
+					</CardHeader>
+					<CardContent>
+						<Link href="/detailed-churn-events">
+							<Button
+								variant="outline"
+								size="sm"
+								className="border border-gray-200 bg-gray-50 hover:bg-gray-100 transition-colors"
+							>
+								View
+							</Button>
+						</Link>
+					</CardContent>
+				</Card>
+			</div>
 		</div>
 	);
 }

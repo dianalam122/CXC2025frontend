@@ -26,11 +26,17 @@ interface UserData {
 	daily_active_periods: any;
 }
 
+interface PredictionResult {
+	predicted_event_index: string;
+	predicted_time: number;
+}
+
 export default function Dashboard() {
 	const [searchTerm, setSearchTerm] = useState("");
 	const [selectedEvents, setSelectedEvents] = useState<string[]>([]);
-	const [userId, setUserId] = useState("");
+	const [userId, setUserId] = useState("1");
 	const [userData, setUserData] = useState<UserData | null>(null);
+	const [prediction, setPrediction] = useState<PredictionResult | null>(null);
 
 	const filteredEvents = EVENT_TYPES.filter((event) =>
 		event.toLowerCase().includes(searchTerm.toLowerCase())
@@ -42,6 +48,11 @@ export default function Dashboard() {
 
 	const handleClearEvents = () => {
 		setSelectedEvents([]);
+		setPrediction(null);
+	};
+
+	const handlePrediction = (newPrediction: PredictionResult | null) => {
+		setPrediction(newPrediction);
 	};
 
 	const handleLoadUserData = async () => {
@@ -179,10 +190,11 @@ export default function Dashboard() {
 									events={selectedEvents}
 									onClear={handleClearEvents}
 									userId={userId}
+									onPrediction={handlePrediction}
 								/>
 							</div>
 							<div className="col-span-6">
-								<PredictionResults />
+								<PredictionResults prediction={prediction} />
 							</div>
 						</div>
 
