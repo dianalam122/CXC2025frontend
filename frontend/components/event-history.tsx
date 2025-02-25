@@ -15,10 +15,10 @@ interface PredictionResult {
 	predicted_time: number;
 }
 
-const defaultPrediction = {
-	predicted_event_index: "dashboard:my-book::view",
-	predicted_time: 120.5,
-};
+// const defaultPrediction = {
+// 	predicted_event_index: "dashboard:my-book::view",
+// 	predicted_time: 120.5,
+// };
 
 export default function EventHistory({
 	events,
@@ -37,6 +37,7 @@ export default function EventHistory({
 
 		setIsLoading(true);
 		setError(null);
+		setPrediction(null);
 		console.log("Sending request to /create-session:", requestData);
 
 		try {
@@ -53,7 +54,8 @@ export default function EventHistory({
 			);
 
 			if (!sessionResponse.ok) {
-				throw new Error("Failed to create session");
+				const errorText = await sessionResponse.text();
+				throw new Error(`Failed to create session: ${errorText}`);
 			}
 
 			const sessionData = await sessionResponse.json();
@@ -72,14 +74,20 @@ export default function EventHistory({
 			);
 
 			if (!predictionResponse.ok) {
-				throw new Error("Failed to get prediction");
+				const errorText = await predictionResponse.text();
+				throw new Error(`Failed to get prediction: ${errorText}`);
 			}
 
 			const predictionData = await predictionResponse.json();
+			console.log("Prediction received:", predictionData);
 			setPrediction(predictionData);
 		} catch (error) {
 			console.error("Error:", error);
-			setPrediction(defaultPrediction);
+			setError(
+				error instanceof Error
+					? error.message
+					: "Failed to get prediction"
+			);
 		} finally {
 			setIsLoading(false);
 		}
